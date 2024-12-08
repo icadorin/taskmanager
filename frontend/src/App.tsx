@@ -1,18 +1,42 @@
-import './App.css';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { useState } from 'react';
+import Login from './Login';
+import TaskManager from './TaskManager';
 
 function App() {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const handleLogin = (token: string) => {
+    setIsAuthenticated(true);
+    localStorage.setItem('authToken', token);
+  };
+
+  const handleLogout = () => {
+    setIsAuthenticated(false);
+    localStorage.removeItem('authToken');
+  };
+
   return (
-    <div className="app-container">
-      <header className="app-header">
-        <h1>Task Manager</h1>
-        <p>Gerencie suas tarefas</p>
-      </header>
-      <h2>Minhas Tarefas</h2>
-      <ul className="task-list">
-        <li className="task-completed">Tarefa concluída</li>
-        <li className="task-pending">Tarefa pendente</li>
-      </ul>
-    </div>
+    <Router>
+      <Routes>
+        <Route
+          path="/login"
+          element={
+            isAuthenticated ? <Navigate to="/" /> : <Login onLogin={handleLogin} />
+          }
+        />
+        <Route
+          path="/"
+          element={
+            isAuthenticated ? (
+              <TaskManager onLogout={handleLogout} />
+            ) : (
+              <Navigate to="/login" />
+            )
+          }
+        />
+      </Routes>
+    </Router>
   );
 }
 
