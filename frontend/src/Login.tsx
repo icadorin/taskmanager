@@ -12,7 +12,7 @@ const Login = ({ onLogin }: LoginProps) => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:8080/api/auth/login', {
+      const response = await fetch('http://localhost:8080/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -42,6 +42,7 @@ const Login = ({ onLogin }: LoginProps) => {
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            className="input-button"
             required
           />
         </div>
@@ -52,11 +53,14 @@ const Login = ({ onLogin }: LoginProps) => {
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="input-button"
             required
           />
         </div>
-        {error && <p className="error">{error}</p>}
-        <button type="submit">Login</button>
+        <div className="error">
+          {error && <div>{error}</div>}
+        </div>
+        <button type="submit" className="input-button">Login</button>
       </form>
     </div>
   );

@@ -1,5 +1,6 @@
 package com.project.taskmanager.controller;
 
+import com.project.taskmanager.exception.ResourceNotFoundException;
 import com.project.taskmanager.model.Task;
 import com.project.taskmanager.service.TaskService;
 import org.springframework.http.ResponseEntity;
@@ -26,9 +27,9 @@ public class TaskController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
-        return taskService.getTaskById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        Task task = taskService.getTaskById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Task not found with id " + id));
+        return ResponseEntity.ok(task);
     }
 
     @PostMapping
