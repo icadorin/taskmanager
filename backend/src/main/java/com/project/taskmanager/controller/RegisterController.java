@@ -1,5 +1,6 @@
 package com.project.taskmanager.controller;
 
+import com.project.taskmanager.dto.RegisterDTO;
 import com.project.taskmanager.exception.EmailAlreadyInUseException;
 import com.project.taskmanager.model.Register;
 import com.project.taskmanager.service.RegisterService;
@@ -18,9 +19,10 @@ public class RegisterController {
     private RegisterService registerService;
 
     @PostMapping("/api/register")
-    public ResponseEntity<?> registerUser(@RequestBody Register register) {
+    public ResponseEntity<?> registerUser(@RequestBody RegisterDTO registerDTO) {
         try {
-            Register savedRegister = registerService.createRegister(register);
+            Register register = new Register(registerDTO.getEmail(), registerDTO.getPassword());
+            Register savedRegister = registerService.createRegister(register, registerDTO.getConfirmPassword());
             return ResponseEntity.ok(savedRegister);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());

@@ -12,8 +12,8 @@ public class RegisterService {
     @Autowired
     private RegisterRepository registerRepository;
 
-    public Register createRegister(Register register) {
-        if (!register.getPassword().equals(register.getConfirmPassword())) {
+    public Register createRegister(Register register, String confirmPassword) {
+        if (!register.getPassword().equals(confirmPassword)) {
             throw new IllegalArgumentException("Passwords do not match.");
         }
 
@@ -24,3 +24,4 @@ public class RegisterService {
         return registerRepository.save(register);
     }
 }
+

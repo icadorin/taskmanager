@@ -20,12 +20,22 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!validateEmailFormat(email) || !validateEmailDomain(email)) {
+
+    if (!email || !password || !confirmPassword) {
+      setStatusMsg('Please fill out all fields.');
+      return;
+    }
+
+    if (!validateEmailFormat(email)) {
       setStatusMsg('Invalid email format.');
       return;
     }
-    
+
+    if (!validateEmailDomain(email)) {
+      setStatusMsg('Invalid domain.');
+      return;
+    }
+
     if (password !== confirmPassword) {
       setStatusMsg("Passwords do not match.");
       setPassword('');
@@ -68,12 +78,11 @@ const Register = () => {
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
-            type="email"
+            type="text"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="input-button"
-            required
           />
         </div>
         <div className="form-group">
@@ -84,7 +93,6 @@ const Register = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="input-button"
-            required
           />
         </div>
         <div className="form-group">
@@ -95,7 +103,6 @@ const Register = () => {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             className="input-button"
-            required
           />
         </div>
         <div className="message-aut-container">

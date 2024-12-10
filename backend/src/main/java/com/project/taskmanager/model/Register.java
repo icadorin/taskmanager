@@ -14,14 +14,12 @@ public class Register {
 
     private String email;
     private String password;
-    private String confirmPassword;
 
     public Register() {}
 
-    public Register(String email, String password, String confirmPassword) {
+    public Register(String email, String password) {
         this.email = email;
         this.password = password;
-        this.confirmPassword = confirmPassword;
     }
 
     public Long getId() {
@@ -46,13 +44,5 @@ public class Register {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 }
