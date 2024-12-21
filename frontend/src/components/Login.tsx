@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 
 interface LoginProps {
   onLogin: (token: string) => void;
@@ -7,12 +8,19 @@ interface LoginProps {
 const Login = ({ onLogin }: LoginProps) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [statusMsg, setStatusMsg] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!email || !password) {
+      setStatusMsg('Please fill out all fields');
+      return;
+    }
+
     try {
-      const response = await fetch('http://localhost:8080/api/login', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -25,9 +33,11 @@ const Login = ({ onLogin }: LoginProps) => {
       }
 
       const data = await response.json();
+      localStorage.setItem('authToken', data.token);
       onLogin(data.token);
+      navigate('/');
     } catch (err: any) {
-      setError(err.message);
+      setStatusMsg(err.message);
     }
   };
 
@@ -38,12 +48,11 @@ const Login = ({ onLogin }: LoginProps) => {
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input
-            type="email"
+            type="text"
             id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="input-button"
-            required
           />
         </div>
         <div className="form-group">
@@ -54,13 +63,26 @@ const Login = ({ onLogin }: LoginProps) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className="input-button"
-            required
           />
         </div>
-        <div className="error">
-          {error && <div>{error}</div>}
+        <div className="message-aut-container">
+          <div className={`message-aut ${statusMsg === 'Registration successful' ? 'success' : 'error'}`}>
+            {statusMsg && <div>{statusMsg}</div>}
+          </div>
         </div>
         <button type="submit" className="input-button">Login</button>
+        <div className="container-lost-register">
+          <div>
+            <Link to="/" className="input-button">
+              Lost Account
+            </Link>
+          </div>
+          <div>
+            <Link to="/register" className="input-button">
+              Create Account
+            </Link>
+          </div>
+        </div>
       </form>
     </div>
   );

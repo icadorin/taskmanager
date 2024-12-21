@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { useState } from 'react';
-import Login from './Login';
-import Register from './Register';
-import TaskManager from './TaskManager';
+import Login from './components/Login';
+import Register from './components/Register';
+import Home from './components/Home';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -32,11 +32,11 @@ function App() {
             isAuthenticated ? <Navigate to="/" /> : <Register />
           }
         />
-        <Route
+         <Route
           path="/"
           element={
             isAuthenticated ? (
-              <TaskManager onLogout={handleLogout} />
+              <Home onLogout={handleLogout} />
             ) : (
               <Navigate to="/login" />
             )

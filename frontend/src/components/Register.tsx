@@ -22,22 +22,22 @@ const Register = () => {
     e.preventDefault();
 
     if (!email || !password || !confirmPassword) {
-      setStatusMsg('Please fill out all fields.');
+      setStatusMsg('Please fill out all fields');
       return;
     }
 
     if (!validateEmailFormat(email)) {
-      setStatusMsg('Invalid email format.');
+      setStatusMsg('Invalid email format');
       return;
     }
 
     if (!validateEmailDomain(email)) {
-      setStatusMsg('Invalid domain.');
+      setStatusMsg('Invalid domain');
       return;
     }
 
     if (password !== confirmPassword) {
-      setStatusMsg("Passwords do not match.");
+      setStatusMsg("Passwords do not match");
       setPassword('');
       setConfirmPassword('');
       return;
@@ -53,7 +53,7 @@ const Register = () => {
       });
 
       if (response.status === 409) {
-        setStatusMsg('Email is already in use.');
+        setStatusMsg('Email is already in use');
         return;
       }
 
@@ -73,7 +73,7 @@ const Register = () => {
 
   return (
     <div className="register-container">
-      <h1>Register</h1>
+      <h1>Create Account</h1>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="email">Email</label>

@@ -1,7 +1,6 @@
 package com.project.taskmanager.controller;
 
 import com.project.taskmanager.dto.LoginDTO;
-import com.project.taskmanager.model.Register;
 import com.project.taskmanager.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,11 +21,11 @@ public class LoginController {
     @PostMapping("/api/login")
     public ResponseEntity<?> loginUser(@RequestBody LoginDTO loginDTO) {
         try {
-            Register user = loginService.authenticate(loginDTO.getEmail(), loginDTO.getPassword());
+            String token = loginService.authenticate(loginDTO.getEmail(), loginDTO.getPassword());
 
             Map<String, String> response = new HashMap<>();
             response.put("message", "Login successful");
-            response.put("userId", user.getId().toString());
+            response.put("token", token);
 
             return ResponseEntity.ok(response);
         } catch (IllegalArgumentException e) {
