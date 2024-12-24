@@ -1,3 +1,5 @@
+import Calendar from '../features/Calendar';
+import '../styles/home.css';
 
 interface HomeProps {
   onLogout: () => void;
@@ -6,11 +8,10 @@ interface HomeProps {
 const Home = ({ onLogout }: HomeProps) => {
   return (
     <div className="home-container">
-      <h1>Welcome to the Home Page!</h1>
-      <p>This is the main dashboard after login.</p>
-      <button onClick={onLogout} className="input-button">
+      <button onClick={onLogout} className="logout-button">
         Logout
       </button>
+      <Calendar />
     </div>
   );
 };

@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { useState } from 'react';
-import Login from './components/Login';
-import Register from './components/Register';
-import Home from './components/Home';
+import Login from './views/Login';
+import Register from './views/Register';
+import Home from './views/Home';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
