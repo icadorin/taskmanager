@@ -7,28 +7,52 @@ const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
 
   const getDaysInMonth = (year: number, month: number) => {
-    const date = new Date(year, month, 1);
-    const days = [];
-    while (date.getMonth() === month) {
-      days.push(new Date(date));
-      date.setDate(date.getDate() + 1);
-    }
-    return days;
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    return Array.from({ length: daysInMonth }, (_, i) => new Date(year, month, i + 1));
   };
 
-  const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1).getDay();
-  const daysInMonth = getDaysInMonth(currentDate.getFullYear(), currentDate.getMonth());
+  const getFirstDayOfMonth = (year: number, month: number) => {
+    const firstDayOfMonth = new Date(year, month, 1).getDay();
+    return { firstDayOfMonth };
+  };
+
+  const generateCalendar = (year: number, month: number) => {
+    const { firstDayOfMonth } = getFirstDayOfMonth(year, month);
+    const daysInMonth = getDaysInMonth(year, month);
+
+    const previousMonthDays: (Date | null)[] = [];
+    const previousMonthLastDay = new Date(year, month, 0).getDate();
+    for (let i = firstDayOfMonth - 1; i >= 0; i--) {
+      previousMonthDays.push(new Date(year, month - 1, previousMonthLastDay - i));
+    }
+
+    const nextMonthDays: (Date | null)[] = [];
+    const remainingCells = 42 - (previousMonthDays.length + daysInMonth.length);
+    for (let i = 1; i <= remainingCells; i++) {
+      nextMonthDays.push(new Date(year, month + 1, i));
+    }
+
+    let allCalendarDays: (Date | null)[] = [
+      ...previousMonthDays,
+      ...daysInMonth,
+      ...nextMonthDays,
+    ];
+
+    while (allCalendarDays.length < 42) {
+      allCalendarDays.push(null);
+    }
+
+    return allCalendarDays;
+  };
+
+  const fullCalendarDays = generateCalendar(currentDate.getFullYear(), currentDate.getMonth());
 
   const handlePreviousMonth = () => {
-    setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1)
-    );
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1));
   };
 
   const handleNextMonth = () => {
-    setCurrentDate(
-      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1)
-    );
+    setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
   };
 
   return (
@@ -42,17 +66,14 @@ const Calendar = () => {
         <button onClick={handleNextMonth}>&gt;</button>
       </div>
       <div className="calendar-grid">
-        {daysOfWeek.map((day) => (
+        {daysOfWeek.map(day => (
           <div key={day} className="calendar-day-header">
             {day}
           </div>
         ))}
-        {Array.from({ length: startOfMonth }).map((_, index) => (
-          <div key={`empty-${index}`} className="calendar-day empty"></div>
-        ))}
-        {daysInMonth.map((day) => (
-          <div key={day.toString()} className="calendar-day">
-            {day.getDate()}
+        {fullCalendarDays.map((day, index) => (
+          <div key={index} className="calendar-day">
+            {day ? day.getDate() : ''}
           </div>
         ))}
       </div>

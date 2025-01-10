@@ -1,3 +1,8 @@
+.calendar-container {
+  padding: 0px 35px 5px 35px;
+  background: rgb(39, 124, 235);
+}
+
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -6,6 +11,7 @@
 .calendar-header {
   display: flex;
   align-items: center;
+  padding: 0px 5px 0px 5px;
   justify-content: space-between;
 }
 
@@ -19,7 +25,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  margin: 5px;
+  border-radius: 2px;
   background: black;
 }
 
@@ -27,7 +34,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 5px;
   padding: 10px;
   border-radius: 2px;
   background: rgb(83, 2, 50);
+}
+
+@media (max-width: 480px) {
+  .calendar-container {
+    padding: 0;
+  }
 }
