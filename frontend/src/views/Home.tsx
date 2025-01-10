@@ -8,9 +8,6 @@ interface HomeProps {
 const Home = ({ onLogout }: HomeProps) => {
   return (
     <div className="home-container">
-      <button onClick={onLogout} className="logout-button">
-        Logout
-      </button>
       <Calendar />
     </div>
   );

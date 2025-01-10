@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
+import '../styles/form.css';
 
 interface LoginProps {
   onLogin: (token: string) => void;
