@@ -28,7 +28,9 @@ body {
   border-radius: 8px 8px 0 0;
 }
 
-h1, h2, p {
+h1,
+h2,
+p {
   margin: 0;
   text-align: center;
 }
