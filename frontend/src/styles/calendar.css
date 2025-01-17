@@ -1,23 +1,32 @@
 .calendar-container {
-  padding: 0px 35px 5px 35px;
-  background: rgb(39, 124, 235);
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  padding: 0px 35px 0px 35px;
+  background: #1a1a1a;
 }
 
 .calendar-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: repeat(auto-fit, 1fr);
+  grid-auto-rows: 1fr;
+  flex-grow: 1;
+  margin-bottom: 40px;
 }
 
 .calendar-header {
   display: flex;
   align-items: center;
-  padding: 0px 5px 0px 5px;
   justify-content: space-between;
+  padding: 10px 5px;
+  flex-shrink: 0;
 }
 
 .calendar-header button {
   padding: 5px 30px 7px 30px;
   font-size: 1rem;
+  background: rgb(75, 26, 116);
   cursor: pointer;
 }
 
@@ -25,19 +34,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 5px;
+  margin: 1px;
   border-radius: 2px;
-  background: black;
+  background: rgb(75, 26, 116);
 }
 
 .calendar-day {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin: 5px;
-  padding: 10px;
+  margin: 1px;
+  padding: 5px;
   border-radius: 2px;
-  background: rgb(83, 2, 50);
+  background: rgb(108, 56, 150);
+  color: white;
+}
+
+.calendar-day.inactive {
+  background: rgba(108, 56, 150, 0.616);
+  color: rgba(0, 0, 0, 0.329);
 }
 
 @media (max-width: 480px) {

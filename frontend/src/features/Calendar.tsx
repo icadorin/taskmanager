@@ -55,6 +55,10 @@ const Calendar = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
   };
 
+  const isCurrentMonth = (date: Date) => {
+    return date.getMonth() === currentDate.getMonth() && date.getFullYear() === currentDate.getFullYear();
+  };
+
   return (
     <div className="calendar-container">
       <div className="calendar-header">
@@ -71,11 +75,17 @@ const Calendar = () => {
             {day}
           </div>
         ))}
-        {fullCalendarDays.map((day, index) => (
-          <div key={index} className="calendar-day">
-            {day ? day.getDate() : ''}
-          </div>
-        ))}
+        {fullCalendarDays.map((day, index) => {
+          const isInCurrentMonth = day && isCurrentMonth(day);
+          return (
+            <div
+              key={index}
+              className={`calendar-day ${!day ? '' : !isInCurrentMonth ? 'inactive' : ''}`}
+            >
+              {day ? day.getDate() : ''}
+            </div>
+          );
+        })}
       </div>
     </div>
   );
