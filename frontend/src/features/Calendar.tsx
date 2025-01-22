@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import DatePickerModal from './DatePickerModal';
 import '../styles/calendar.css';
 
 const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
 const Calendar = () => {
   const [currentDate, setCurrentDate] = useState(new Date());
+  const [showDatePicker, setShowDatePicker] = useState(false);
+  const [modalPosition, setModalPosition] = useState({ top: 0, left: 0 });
 
   const getDaysInMonth = (year: number, month: number) => {
     const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -55,6 +58,16 @@ const Calendar = () => {
     setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1));
   };
 
+  const handleOpenDatePicker = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    setModalPosition({ top: rect.bottom, left: rect.left });
+    setShowDatePicker(true);
+  };
+
+  const handleCloseDatePicker = () => {
+    setShowDatePicker(false);
+  };
+
   const isCurrentMonth = (date: Date) => {
     return date.getMonth() === currentDate.getMonth() && date.getFullYear() === currentDate.getFullYear();
   };
@@ -62,12 +75,14 @@ const Calendar = () => {
   return (
     <div className="calendar-container">
       <div className="calendar-header">
-        <button onClick={handlePreviousMonth}>&lt;</button>
+        <button onClick={handlePreviousMonth} className="button-select-month">&lt;</button>
         <h2>
-          {currentDate.toLocaleString('default', { month: 'long' })}{' '}
-          {currentDate.getFullYear()}
+          <button onClick={handleOpenDatePicker} className="button-get-month" >
+            {currentDate.toLocaleString('default', { month: 'long' })}{' '}
+            {currentDate.getFullYear()}
+          </button>
         </h2>
-        <button onClick={handleNextMonth}>&gt;</button>
+        <button onClick={handleNextMonth} className="button-select-month">&gt;</button>
       </div>
       <div className="calendar-grid">
         {daysOfWeek.map(day => (
@@ -87,6 +102,13 @@ const Calendar = () => {
           );
         })}
       </div>
+      {showDatePicker && (
+        <DatePickerModal
+          onClose={handleCloseDatePicker}
+          currentDate={currentDate}
+          position={modalPosition}
+        />
+      )}
     </div>
   );
 };

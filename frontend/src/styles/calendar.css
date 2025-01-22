@@ -19,15 +19,32 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 5px;
+  margin: 0px 1px;
   flex-shrink: 0;
 }
 
-.calendar-header button {
-  padding: 5px 30px 7px 30px;
-  font-size: 1rem;
-  background: rgb(75, 26, 116);
+.button-get-month {
+  width: 300px;
+  height: 40px;
+  font-size: 1em;
+  font-family: inherit;
+  font-weight: bold;
+  text-align: center;
+  box-sizing: border-box;
   cursor: pointer;
+  border: none;
+}
+
+.button-get-month:hover {
+  color: #535bf2;
+}
+
+.button-select-month {
+  padding: 5px 30px 7px 30px;
+  font-size: 1em;
+  font-family: inherit;
+  text-align: center;
+  background: rgb(75, 26, 116);
 }
 
 .calendar-day-header {
@@ -53,6 +70,13 @@
 .calendar-day.inactive {
   background: rgba(108, 56, 150, 0.616);
   color: rgba(0, 0, 0, 0.329);
+}
+
+@media (max-width: 524px) {
+  .button-get-month {
+    width: 150px;
+    font-size: 0.7em;
+  }
 }
 
 @media (max-width: 480px) {
